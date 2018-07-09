@@ -21,8 +21,18 @@ namespace MathExtension.Linear_Algebra
 
         public Vector(T[] numberArr)
         {
-            VectorData = numberArr;
             numElements = numberArr.Length;
+
+            VectorData = new T[numElements];
+            for(int i = 0; i < numberArr.Length; i++)
+            {
+                VectorData[i] = new T();
+                for(int j = 0; j < VectorData[i].components.Length; j++)
+                {
+                    VectorData[i].components[j] = numberArr[i].components[j];
+                }
+            }
+            VectorData = numberArr;
         }
 
         public T this[int i]

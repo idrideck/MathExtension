@@ -108,7 +108,7 @@ namespace MathExtension
         /// <returns></returns>
         public static Complex operator /(Complex A, double k)
         {
-            var newArrVal = complexScalarMultiple(A.components, 1/k);
+            var newArrVal = complexScalarMultiple(A.components, 1 / k);
             return new Complex(newArrVal[0], newArrVal[1]);
 
         }
@@ -167,7 +167,6 @@ namespace MathExtension
                 return Math.Sqrt(Real * Real + Imaginary * Imaginary);
             }
         }
-
 
         #region Misc functions
         /// <summary>
