@@ -13,4 +13,9 @@
     <DocumentationFile>bin\Release\netstandard1.4\MathExtension.xml</DocumentationFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Linear Algebra\ColumnVector.cs" />
+    <Compile Remove="Linear Algebra\RowVector.cs" />
+  </ItemGroup>
+
 </Project>

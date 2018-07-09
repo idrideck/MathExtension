@@ -2,191 +2,109 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MathExtension.LinearAlgebra
+namespace MathExtension.Linear_Algebra
 {
-    /// <summary>
-    /// Vector object base class
-    /// </summary>
-    public class Vector
+    public class Vector<T> where T : Number , new()
     {
-        /// <summary>
-        /// Array containing vector elements
-        /// </summary>
-        protected double[] A;
+        readonly int numElements;
+        private T[] VectorData;
 
-        /// <summary>
-        /// Number of vector elements
-        /// </summary>
-        public readonly int size;
-
-        /// <summary>
-        /// Ctor for a vector of dim elements
-        /// </summary>
-        /// <param name="dim">Number of elements to consist in this Vector</param>
-        protected Vector(int dim)
+        public Vector(int size)
         {
-            size = dim;
-            A = new double[size];
-        }
-
-        /// <summary>
-        /// Ctor for a vector from an array
-        /// </summary>
-        /// <param name="doubleArr"></param>
-        protected Vector(double[] doubleArr)
-        {
-            size = doubleArr.Length;
-            A = doubleArr;
-        }
-
-        /// <summary>
-        /// Returns the i-th value within this vector
-        /// </summary>
-        /// <param name="i">Zero indexed</param>
-        /// <returns></returns>
-        public double this[int i]
-        {
-            get
+            VectorData = new T[size];
+            numElements = size;
+            for(int i = 0; i < size; i++)
             {
-                return A[i];
-            }
-            set
-            {
-                A[i] = value;
+                VectorData[i] = new T();
             }
         }
 
-        /// <summary>
-        /// Returns the dot muliplication of Vectors A and B
-        /// </summary>
-        /// <param name="A">Vector A</param>
-        /// <param name="B">Vector B</param>
-        /// <returns></returns>
-        protected static double dotMultiply(Vector A, Vector B)
+        public Vector(T[] numberArr)
         {
-            if (A.size == B.size)
-            {
-                double C = 0;
-
-                for (int i = 0; i < A.size; i++)
-                {
-                    C += A[i] * B[i];
-                }
-                return C;
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
+            VectorData = numberArr;
+            numElements = numberArr.Length;
         }
 
-        /// <summary>
-        /// Returns the sum/difference of Vectors A and B in an array depending on the sign
-        /// </summary>
-        /// <param name="A">Vector A</param>
-        /// <param name="B">Vector B</param>
-        /// <param name="sign">1 for addition, -1 for subtraction</param>
-        /// <returns></returns>
-        protected static double[] sum(Vector A, Vector B, int sign)
+        public T this[int i]
         {
-            if(A.size == B.size)
-            {
-                double[] C = new double[A.size];
-
-                for (int i = 0; i < A.size; i++)
-                {
-                    C[i] = A[i] + sign * B[i];
-                }
-                return C;
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException();
-            }
+            get { return VectorData[i]; }
+            set { VectorData[i] = value; }
         }
 
-        /// <summary>
-        /// Returns the scalar multiple of Vector A
-        /// </summary>
-        /// <param name="A">Vector A</param>
-        /// <param name="k">Scalar multiple</param>
-        /// <returns></returns>
-        protected static double[] scalarMultiply(Vector A, double k)
-        {
-            double[] C = new double[A.size];
 
-            for (int i = 0; i < A.size; i++)
+        #region Class vector operator functions
+
+        private static Vector<T> vectorSumSub(Vector<T> left, Vector<T> right, int sign)
+        {
+            int size = left.numElements;
+            var newVec = new Vector<T>(size);
+
+            for (int i = 0; i < size; i++)
             {
-                C[i] = A[i] * k;
+                double[] newVecDoubleArrVal = left[i].sum(left[i].components, right[i].components, sign);
+                newVec[i].components = newVecDoubleArrVal;
             }
-            return C;
+            return newVec;
         }
 
-        /// <summary>
-        /// Returns/sets the array of this Vector
-        /// </summary>
-        public double[] Arr
+        private static Vector<T> vectorScalarMultiply(Vector<T> left, double k)
         {
-            get { return A; }
-            set
+            int size = left.numElements;
+            var newVec = new Vector<T>(size);
+
+            for (int i = 0; i < size; i++)
             {
-                if(value.Length != size) { throw new ArgumentOutOfRangeException(); } else { A = value; }
+                double[] newVecDoubleArrVal = left[i].scalarMultiple(left[i].components, k);
+                newVec[i].components = newVecDoubleArrVal;
             }
+            return newVec;
+        }
+        #endregion
+
+        #region Vector user defined operator overloads
+        public static Vector<T> operator +(Vector<T> left, Vector<T> right)
+        {
+            return vectorSumSub(left, right, 1);
         }
 
-        /// <summary>
-        /// Returns the Euclidian norm of this Vector by returning the square root of the sum of all squared elements 
-        /// </summary>
-        public double EuclidNorm
+        public static Vector<T> operator -(Vector<T> left, Vector<T> right)
+        {
+            return vectorSumSub(left, right, -1);
+        }
+
+        public static Vector<T> operator *(Vector<T> left, double k)
+        {
+            return vectorScalarMultiply(left, k);
+        }
+
+        public static Vector<T> operator *(double k, Vector<T> right)
+        {
+            return vectorScalarMultiply(right, k);
+        }
+
+        public static Vector<T> operator /(Vector<T> left, double k)
+        {
+            return vectorScalarMultiply(left, 1/k);
+        }
+        #endregion
+
+        #region Misc functions
+
+        public virtual string Str
         {
             get
             {
-                double sum = 0;
-                for(int i = 0; i < size; i++)
+                string outputStr = "";
+                for(int i = 0; i < numElements; i++)
                 {
-                    sum += A[i] * A[i];
+                    outputStr += VectorData[i].Str + "\n";
                 }
-
-                return Math.Sqrt(sum);
-            }
-            
-        }
-
-        /// <summary>
-        /// Returns the Matrix-vector multiplication as an array
-        /// </summary>
-        /// <param name="A">Matrix A</param>
-        /// <param name="B">Vector B</param>
-        /// <returns></returns>
-        protected static double[] singleThreadMultiplication(Matrix A, Vector B)
-        {
-            if (A.n != B.size)
-            {
-                throw new ArgumentOutOfRangeException(string.Format("Tried to multiply Matrix with dim {0} and Vector with dim {1}", string.Join(",", A.Dim), string.Join(",", B.size)));
-            }
-            else
-            {
-                double[] C = new double[B.size];
-                for (int i = 0; i < A.m; i++)
-                {
-                    for (int j = 0; j < B.size; j++)
-                    {
-                        C[i] += A[i, j] * B[j];
-                    }
-                }
-                return C;
+                return outputStr;
             }
         }
 
-        /// <summary>
-        /// Returns the elements of this vector as a string
-        /// </summary>
-        /// <param name="separatorChar">Character to separate values by</param>
-        /// <returns></returns>
-        public virtual string Str(string separatorChar = "\n")
-        {
-            return string.Join(separatorChar, A);
-        }
+        #endregion
+
+
     }
 }
