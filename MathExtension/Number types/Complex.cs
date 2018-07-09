@@ -78,6 +78,18 @@ namespace MathExtension
         }
 
         /// <summary>
+        /// Returns the multiplication of Complex A and B
+        /// </summary>
+        /// <param name="A"></param>
+        /// <param name="B"></param>
+        /// <returns></returns>
+        public static Complex operator *(Complex A, Complex B)
+        {
+            var newArrVal = complexMultiplication(A.components, B.components);
+            return new Complex(newArrVal[0], newArrVal[1]);
+        }
+
+        /// <summary>
         /// Returns the scalar multiple of Complex A and scalar k
         /// </summary>
         /// <param name="A"></param>

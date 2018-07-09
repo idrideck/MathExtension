@@ -78,10 +78,7 @@ namespace MathExtension.Linear_Algebra
             for (int i = 0; i < size; i++)
             {
                 double[] newVecDoubleArrVal = left[i].multiply(left[i].components, right[i].components);
-                for(int j = 0; j < newT.components.Length; j++)
-                {
-                    newT.components = newT.sum(newT.components, newVecDoubleArrVal,1);
-                }
+                newT.components = newT.sum(newT.components, newVecDoubleArrVal, 1);
             }
             return newT;
         }
@@ -106,6 +103,11 @@ namespace MathExtension.Linear_Algebra
         public static Vector<T> operator *(double k, Vector<T> right)
         {
             return vectorScalarMultiply(right, k);
+        }
+
+        public static Vector<T> operator -(Vector<T> right)
+        {
+            return vectorScalarMultiply(right, -1);
         }
 
         public static Vector<T> operator /(Vector<T> left, double k)

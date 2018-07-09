@@ -46,7 +46,7 @@ namespace TestCmd
 
             //var num2 = new Complex(3, 4);
 
-            var vec = new Vector<Complex>(new Complex[] { new Complex(1,2), new Complex(-5,10)});
+            var vec = new Vector<Complex>(new Complex[] { new Complex(1, 2), new Complex(-5, 10) });
             var vec2 = new Vector<Complex>(new Complex[] { new Complex(3, -1), new Complex(2, 7) });
 
             var vec3 = vec + vec2;
@@ -57,8 +57,15 @@ namespace TestCmd
 
             Debug.WriteLine((vec3 * 2).Str);
 
-            Debug.WriteLine((vec3 /2).Str);
+            Debug.WriteLine((vec3 / 2).Str);
 
+            var vec4 = new Vector<Complex>(new Complex[] { new Complex(0, 1), new Complex(2, 3) } );
+            var vec5 = new Vector<Complex>(new Complex[] { new Complex(1, 0), new Complex(-3, 5) });
+
+            Debug.WriteLine(vec4.Str);
+            Debug.WriteLine(vec5.Str);
+
+            Debug.WriteLine((vec4 * (vec5)).Str);
         }
     }
 }
