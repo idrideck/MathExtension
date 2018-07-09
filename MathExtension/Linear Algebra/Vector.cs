@@ -69,6 +69,22 @@ namespace MathExtension.Linear_Algebra
             }
             return newVec;
         }
+
+        private static T vectorDotMultiply(Vector<T> left, Vector<T> right)
+        {
+            int size = left.numElements;
+            var newT = new T();
+
+            for (int i = 0; i < size; i++)
+            {
+                double[] newVecDoubleArrVal = left[i].multiply(left[i].components, right[i].components);
+                for(int j = 0; j < newT.components.Length; j++)
+                {
+                    newT.components = newT.sum(newT.components, newVecDoubleArrVal,1);
+                }
+            }
+            return newT;
+        }
         #endregion
 
         #region Vector user defined operator overloads
@@ -95,6 +111,11 @@ namespace MathExtension.Linear_Algebra
         public static Vector<T> operator /(Vector<T> left, double k)
         {
             return vectorScalarMultiply(left, 1/k);
+        }
+
+        public static T operator *(Vector<T> left, Vector<T> right)
+        {
+            return vectorDotMultiply(left, right);
         }
         #endregion
 

@@ -49,6 +49,7 @@ namespace MathExtension
             sum = complexSum;
             scalarMultiple = complexScalarMultiple;
             reciprocal = complexReciprocal;
+            multiply = complexMultiplication;
         }
 
         #region Complex user defined operator overloads
@@ -137,6 +138,13 @@ namespace MathExtension
             //return new Complex(A.real * k, A.imaginary * k);
 
             return new double[] { leftComponents[0] * k, leftComponents[1] * k };
+        }
+
+        private static double[] complexMultiplication(double[] leftComponents, double[] rightComponents)
+        {
+            //return new Complex(A.real * B.real - A.imaginary * B.imaginary, A.imaginary * B.real + A.real * B.imaginary);
+
+            return new double[] { leftComponents[0] * rightComponents[0] - leftComponents[1] * rightComponents[1], leftComponents[1] * rightComponents[0] + leftComponents[0] * rightComponents[1] };
         }
 
         private static double[] complexReciprocal(double k, double[] rightComponents)

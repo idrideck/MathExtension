@@ -49,12 +49,16 @@ namespace TestCmd
             var vec = new Vector<Complex>(new Complex[] { new Complex(1,2), new Complex(-5,10)});
             var vec2 = new Vector<Complex>(new Complex[] { new Complex(3, -1), new Complex(2, 7) });
 
-            var vec3 = vec + vec2; 
+            var vec3 = vec + vec2;
+
+            var genericNum = new Number();
+
             Debug.WriteLine(vec3.Str);
 
             Debug.WriteLine((vec3 * 2).Str);
 
             Debug.WriteLine((vec3 /2).Str);
+
         }
     }
 }

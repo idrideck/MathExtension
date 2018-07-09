@@ -12,10 +12,11 @@ namespace MathExtension
         public Func<double[], double[], int, double[]> sum;
         public Func<double[], double, double[]> scalarMultiple;
         public Func<double, double[], double[]> reciprocal;
+        public Func<double[], double[], double[]> multiply;
 
         public virtual string Str
         {
-            get { return "Error getting string value from containing type."; }
+            get { throw new InvalidOperationException(); }
         }
     }
 }
