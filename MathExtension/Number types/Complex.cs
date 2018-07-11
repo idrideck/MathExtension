@@ -4,6 +4,28 @@ using System.Text;
 
 namespace MathExtension
 {
+
+    public class Complex : Number<Complex>
+    {
+        public Complex()
+        {
+            values = new double[2];
+            linkMethods();
+        }
+
+        private void linkMethods()
+        {
+            add = AddComplex;
+        }
+
+        private static Number<Complex> AddComplex(Number<Complex> left, Number<Complex> right, int sign)
+        {
+            return new Number<Complex>(new double[] { left.values[0] + sign * right.values[0], left.values[1] + sign * right.values[1]});
+        }
+
+    }
+
+    /*
     public class Complex : Number
     {
 
@@ -203,4 +225,6 @@ namespace MathExtension
         }
         #endregion
     }
+
+    */
 }
