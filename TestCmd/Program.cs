@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using MathExtension.LinearAlgebra;
 using MathExtension;
 using System.Diagnostics;
-using MathExtension.Linear_Algebra;
+//using MathExtension.Linear_Algebra;
 
 namespace TestCmd
 {
@@ -37,9 +37,13 @@ namespace TestCmd
 
             Debug.WriteLine((vec4 * (vec5)).Str);*/
 
-            Number<Complex> num = new Number<Complex>();
+            Complex num1 = new Complex(1,2);
 
-            
+            Complex num2 = new Complex(3,4);
+
+            var num3 = num1 + num2;
+
+            Debug.WriteLine(num3.Str);
         }
     }
 }

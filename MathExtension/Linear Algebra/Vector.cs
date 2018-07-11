@@ -4,6 +4,8 @@ using System.Text;
 
 namespace MathExtension.Linear_Algebra
 {
+
+    /*
     public class Vector<T> where T : Number , new()
     {
         readonly int numElements;
@@ -140,4 +142,6 @@ namespace MathExtension.Linear_Algebra
 
 
     }
+
+    */
 }

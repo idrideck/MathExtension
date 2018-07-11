@@ -6,28 +6,28 @@ namespace MathExtension
 {
     public class Number<T> where T : new()
     {
-        public double[] values;
+        public double[] components;
 
         public Number()
         {
 
         }
 
-        public Number(double[] values)
+        public Number(double[] components)
         {
-            this.values = values;
+            this.components = components;
         }
 
-        protected static Func<Number<T>, Number<T>, int, Number<T>> add;
+        protected static Func<Number<T>, Number<T>, int, T> add;
 
         public virtual string Str
         {
             get { throw new InvalidOperationException(); }
         }
 
-        public static Number<T> operator + (Number<T> left, Number<T> right)
+        public static T operator + (Number<T> left, Number<T> right)
         {
-            return add(left,right, 1);
+            return add(left, right, 1);
         }
     }
 }

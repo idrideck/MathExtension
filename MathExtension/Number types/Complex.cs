@@ -7,9 +7,19 @@ namespace MathExtension
 
     public class Complex : Number<Complex>
     {
+        public double Real { get { return components[0]; } set { components[0] = value; } }
+
+        public double Imaginary { get { return components[1]; } set { components[1] = value; } }
+
         public Complex()
         {
-            values = new double[2];
+            components = new double[2];
+            linkMethods();
+        }
+
+        public Complex(double real, double imaginary)
+        {
+            components = new double[] { real, imaginary };
             linkMethods();
         }
 
@@ -18,10 +28,25 @@ namespace MathExtension
             add = AddComplex;
         }
 
-        private static Number<Complex> AddComplex(Number<Complex> left, Number<Complex> right, int sign)
+        private static Complex AddComplex(Number<Complex> left, Number<Complex> right, int sign)
         {
-            return new Number<Complex>(new double[] { left.values[0] + sign * right.values[0], left.values[1] + sign * right.values[1]});
+            return new Complex( left.components[0] + sign * right.components[0], left.components[1] + sign * right.components[1]);
         }
+
+        #region Misc functions
+        /// <summary>
+        /// Returns this complex number in string format
+        /// </summary>
+        public override string Str
+        {
+
+            get
+            {
+                string signStr = Imaginary >= 0 ? " + " : " - ";
+                return string.Format("{0}{1}{2}i", Real, signStr, Math.Abs(Imaginary));
+            }
+        }
+        #endregion
 
     }
 
